@@ -246,6 +246,23 @@ wheels = [
 ]
 
 [[package]]
+name = "chatbot"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "chainlit" },
+    { name = "dotenv" },
+    { name = "openai-agents" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "chainlit", specifier = ">=2.5.5" },
+    { name = "dotenv", specifier = ">=0.9.9" },
+    { name = "openai-agents", specifier = ">=0.0.19" },
+]
+
+[[package]]
 name = "chevron"
 version = "0.14.0"
 source = { registry = "https://pypi.org/simple" }
@@ -742,23 +759,6 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/ea/ca/8e91948b782ddfbd194f323e7e7d9ba12e5877addf04fb2bf8fca38e86ac/monotonic-1.6.tar.gz", hash = "sha256:3a55207bcfed53ddd5c5bae174524062935efed17792e9de2ad0205ce9ad63f7", size = 7615 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/9a/67/7e8406a29b6c45be7af7740456f7f37025f0506ae2e05fb9009a53946860/monotonic-1.6-py2.py3-none-any.whl", hash = "sha256:68687e19a14f11f26d140dd5c86f3dba4bf5df58003000ed467e0e2a69bca96c", size = 8154 },
-]
-
-[[package]]
-name = "multi-agent"
-version = "0.1.0"
-source = { virtual = "." }
-dependencies = [
-    { name = "chainlit" },
-    { name = "dotenv" },
-    { name = "openai-agents" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "chainlit", specifier = ">=2.5.5" },
-    { name = "dotenv", specifier = ">=0.9.9" },
-    { name = "openai-agents", specifier = ">=0.0.19" },
 ]
 
 [[package]]
