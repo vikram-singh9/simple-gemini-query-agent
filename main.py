@@ -19,7 +19,7 @@ model = OpenAIChatCompletionsModel(
 
 agent = Agent(
     name='assistant',
-    instructions='You are a helpful assistant.',
+    instructions='your are a query agent.',
     model=model
 )
 
