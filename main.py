@@ -1,4 +1,5 @@
 from agents import Agent, Runner, OpenAIChatCompletionsModel, RunConfig, set_tracing_disabled
+from openai.types.responses import ResponseTextDeltaEvent
 from dotenv import load_dotenv
 from openai import AsyncOpenAI
 import os
@@ -33,7 +34,7 @@ config = RunConfig(
 @cl.on_chat_start
 async def handle_chat_start():
     cl.user_session.set('history',[])
-    await cl.Message(content="Hello! How can I help you today?").send()
+    await cl.Message(content="It's VIKRAM! How can I help you today?").send()
 
 @cl.on_message
 async def on_message(message: cl.Message):
@@ -44,9 +45,16 @@ async def on_message(message: cl.Message):
         'content': message.content
     })
 
-    # Run the agent using runner
-    result = await Runner.run(agent, input=history)
+    msg = cl.Message(content="")
+    msg.send()
 
+    # Run the agent using runner
+    result = Runner.run_streamed(agent, input=history)
+
+    async for event in result.stream_events():
+        if event.type == 'raw_response_event' and isinstance(event.data, ResponseTextDeltaEvent):
+            await msg.stream_token(event.data.delta)
+            
     # Append the agent's response to the session history
     history.append({
         'role': 'assistant',
@@ -55,5 +63,4 @@ async def on_message(message: cl.Message):
     cl.user_session.set('history', history)
 
     # Send back the agent's final output to UI
-    cl.Message(content="Processing your request...").send()
-    await cl.Message(content=result.final_output).send()
+    # await cl.Message(content=result.final_output).send() we are running through streaming
